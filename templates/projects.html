@@ -6,5 +6,10 @@
 <body>
  <h1>Project: {{ projects[0] }}</h1>
   <p>Description: {{projects[1]}} Max Grade: {{ projects[2] }}</p>
+  <ul>
+  {% for grade in grades %}
+  	<li> Github:{{grade[0]}}  Grade:{{grade[1]}}</li>
+  {% endfor %}
+  </ul>
 </body>
 </html>
