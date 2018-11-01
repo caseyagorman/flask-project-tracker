@@ -57,8 +57,8 @@ def get_student_to_delete():
 def student_delete():
 	 """Delete a student."""
 	 github = request.form.get("github")
-	 hackbright.delete_student(github)
-	 hackbright.delete_grades(github)
+	 hackbright.delete_student_by_github(github)
+	 hackbright.delete_grades_by_github(github)
 	 return redirect("/")
 
 @app.route("/project")
@@ -98,10 +98,23 @@ def add_projects():
 	description = request.form.get("description")
 	max_grade = request.form.get("max_grade")
 	hackbright.add_student_project(title, description, max_grade)
-	return render_template("projects.html",
+	return render_template("project_add.html",
 							title=title,
 							description=description,
 							max_grade=max_grade)
+
+@app.route("/delete-project")
+def get_project_to_delete():
+	return render_template("project_delete.html")
+
+
+@app.route("/project-delete", methods=['POST'])
+def project_delete():
+	 """Delete a student."""
+	 title = request.form.get("title")
+	 hackbright.delete_project_by_title(title)
+	 hackbright.delete_grades_by_title(title)
+	 return redirect("/")
 
 if __name__ == "__main__":
 	hackbright.connect_to_db(app)

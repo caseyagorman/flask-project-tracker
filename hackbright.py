@@ -71,7 +71,58 @@ def delete_grades(github):
             """
     db.session.execute(QUERY, {'github': github})
     db.session.commit()
+def delete_student(github):
 
+    
+    QUERY = """DELETE FROM students 
+            WHERE github = :github;
+            """
+    db.session.execute(QUERY, {'github': github})
+    db.session.commit()
+
+def delete_grades(github):
+
+    
+    QUERY = """DELETE FROM grades
+            WHERE student_github = :github;
+            """
+    db.session.execute(QUERY, {'github': github})
+    db.session.commit()
+def delete_student_by_github(github):
+
+    
+    QUERY = """DELETE FROM students 
+            WHERE github = :github;
+            """
+    db.session.execute(QUERY, {'github': github})
+    db.session.commit()
+
+def delete_grades_by_github(github):
+
+    
+    QUERY = """DELETE FROM grades
+            WHERE student_github = :github;
+            """
+    db.session.execute(QUERY, {'github': github})
+    db.session.commit()
+
+def delete_project_by_title(title):
+
+    
+    QUERY = """DELETE FROM projects 
+            WHERE title= :title;
+            """
+    db.session.execute(QUERY, {'title': title})
+    db.session.commit()
+
+def delete_grades_by_title(title):
+
+    
+    QUERY = """DELETE FROM grades
+            WHERE project_title = :title;
+            """
+    db.session.execute(QUERY, {'title': title})
+    db.session.commit()
 
 def get_project_by_title(title):
     """Given a project title, print information about the project."""
@@ -106,17 +157,17 @@ def get_grade_by_github_title(github, title):
     return row
 
 
-# def assign_grade(github, title, grade):
-#     """Assign a student a grade on an assignment and print a confirmation."""
+def assign_grade(github, title, grade):
+    """Assign a student a grade on an assignment and print a confirmation."""
 
-#     QUERY = """
-#         INSERT INTO grades (student_github, project_title, grade)
-#           VALUES (:github, :title, :grade)
-#         """
+    QUERY = """
+        INSERT INTO grades (student_github, project_title, grade)
+          VALUES (:github, :title, :grade)
+        """
 
-#     db_cursor = db.session.execute(QUERY, {'github': github,
-#                                            'title': title,
-#                                            'grade': grade})
+    db_cursor = db.session.execute(QUERY, {'github': github,
+                                           'title': title,
+                                           'grade': grade})
 
     db.session.commit()
 def add_student_project(title, description, max_grade):
@@ -129,7 +180,19 @@ def add_student_project(title, description, max_grade):
                                 'max_grade': max_grade})
     db.session.commit()
 
+def assign_project(github, title):
+    """Assign a student a grade on an assignment and print a confirmation."""
 
+    QUERY = """
+        INSERT INTO grades (student_github, project_title, grade)
+          VALUES (:github, :title, :grade)
+        """
+
+    db_cursor = db.session.execute(QUERY, {'github': github,
+                                           'title': title,
+                                           'grade': grade})
+
+    db.session.commit()
 def get_grades_by_github(github):
     """Get a list of all grades for a student by their github username"""
 

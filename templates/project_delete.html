@@ -1,0 +1,15 @@
+
+{% extends 'base.html' %}
+<title>Delete a Project</title>
+{% block content %}
+<br>
+<form action="/project-delete" method="POST">
+<div class="form-group mb-2">
+  <label>Enter Project Title
+      <input type="text" name="title">
+  </label><br>
+  <button type="submit" class="btn btn-primary mb-2">Delete project</button>
+  </div>
+</form>
+
+{% endblock %}
