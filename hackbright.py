@@ -119,6 +119,16 @@ def assign_grade(github, title, grade):
                                            'grade': grade})
 
     db.session.commit()
+def add_student_project(github, title, max_grade):
+    QUERY = """
+        INSERT INTO projects (title, description, max_grade)
+          VALUES (:title, :description, :max_grade)
+          AND title = :title
+        """
+    db.session.execute(QUERY, {'title': title,
+                                'description': description,
+                                'max_grade': max_grade})
+    db.session.commit()
 
 
 def get_grades_by_github(github):
