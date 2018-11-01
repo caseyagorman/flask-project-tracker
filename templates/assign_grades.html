@@ -1,6 +1,6 @@
 
 {% extends 'base.html' %}
-<title>Add project and grade</title>
+<title>Assign grade</title>
 {% block content %}
 <br>
 <form action="/assign-grades" method="POST">
@@ -13,9 +13,6 @@
   <label>Enter grade
       <input type="text" name="grade">
   </label><br>
-  <label>Enter max_grade
-        <input type="text" name="max_grade">
-    </label><br>
   <button type="submit" class="btn btn-primary mb-2" value="Display Student">Add grade</button>
 </form>
 

@@ -42,7 +42,6 @@ def student_add():
     last = request.form.get("last")
     github = request.form.get("github")
     hackbright.make_new_student(first, last, github)
-
     return render_template("student_add.html", 
     						first=first,
     						last=last,
@@ -78,15 +77,18 @@ def list_students_and_projects():
 							students=students,
 							projects=projects)
 
-# @app.route("/assign-grade")
-# def get_grades():
-# 	return render_template("assign_grades.html")
+@app.route("/assign-grade")
+def get_grades():
+	return render_template("assign_grades.html")
 
-# @app.route("/assign-grades", methods=['POST'])
-# def assign_grade():
-# 	github = request.args.get("github")
-# 	title = request.args.get("title")
-# 	grade = request.args.get("grade")
+@app.route("/assign-grades", methods=['POST'])
+def assign_grade():
+	github = request.form.get("github")
+	title = request.form.get("title")
+	grade = request.form.get("grade")
+	hackbright.assign_grade(github, title, grade)
+	return render_template("grades.html", 
+    						github=github)
 
 @app.route("/add-project")
 def add_project():

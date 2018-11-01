@@ -168,8 +168,8 @@ def assign_grade(github, title, grade):
     db_cursor = db.session.execute(QUERY, {'github': github,
                                            'title': title,
                                            'grade': grade})
-
     db.session.commit()
+    
 def add_student_project(title, description, max_grade):
     QUERY = """
         INSERT INTO projects (title, description, max_grade)
@@ -180,19 +180,6 @@ def add_student_project(title, description, max_grade):
                                 'max_grade': max_grade})
     db.session.commit()
 
-def assign_project(github, title):
-    """Assign a student a grade on an assignment and print a confirmation."""
-
-    QUERY = """
-        INSERT INTO grades (student_github, project_title, grade)
-          VALUES (:github, :title, :grade)
-        """
-
-    db_cursor = db.session.execute(QUERY, {'github': github,
-                                           'title': title,
-                                           'grade': grade})
-
-    db.session.commit()
 def get_grades_by_github(github):
     """Get a list of all grades for a student by their github username"""
 
