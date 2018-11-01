@@ -1,6 +1,6 @@
 """A web application for tracking projects, students, and student grades."""
 
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 
 import hackbright
 
@@ -41,12 +41,25 @@ def student_add():
     first = request.form.get("first")
     last = request.form.get("last")
     github = request.form.get("github")
-    student = hackbright.make_new_student(first, last, github)
+    hackbright.make_new_student(first, last, github)
 
     return render_template("student_add.html", 
     						first=first,
     						last=last,
     						github=github)
+							
+@app.route("/student-delete")
+def get_student_to_delete():
+	return render_template("student_delete.html")
+
+
+@app.route("/delete-student", methods=['POST'])
+def student_delete():
+	 """Delete a student."""
+	 github = request.form.get("github")
+	 hackbright.delete_student(github)
+	 hackbright.delete_grades(github)
+	 return redirect("/")
 
 @app.route("/project")
 def get_project():
@@ -64,6 +77,21 @@ def list_students_and_projects():
 	return render_template("homepage.html",
 							students=students,
 							projects=projects)
+
+@app.route("/assign-grades")
+def get_grades():
+	return render_template("assign_grades.html")
+
+@app.route("/assign-grade", methods=['POST'])
+def assign_grade():
+	github = request.args.get("github")
+	title = request.args.get("title")
+	grade = request.args.get("grade")
+	hackbright.assign_grade(github, title, grade)
+	return render_template("grades.html", 
+    						github=github,
+    						title=title,
+    						grade=grade)
 
 if __name__ == "__main__":
 	hackbright.connect_to_db(app)

@@ -1,9 +1,8 @@
-<html>
-<head>
+{% extends "base.html" %}
     <title>Add a Student</title>
-</head>
 
-<body>
+
+{% block content %}
 <h1> Hello! </h1>
   <form action="/student-add" method="POST">
       <label>Enter GitHub username
@@ -12,11 +11,10 @@
       <label>Enter Student's first name
           <input type="text" name="first">
       </label>
-      <label>Enter Student's last name
+      <label>Enter Student's last name 
           <input type="text" name="last">
       </label>
-      <input type="submit" value="Display Student">
+      <button type="submit" class="btn btn-primary mb-2" value="Display Student">Display Student</button>
   </form>
 
-</body>
-</html>
+{% endblock %}

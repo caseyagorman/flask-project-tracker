@@ -46,12 +46,30 @@ def make_new_student(first_name, last_name, github):
 
     QUERY = """
         INSERT INTO students (first_name, last_name, github)
-          VALUES (:first_name, :last_name, :github)
+        VALUES (:first_name, :last_name, :github)
         """
 
     db.session.execute(QUERY, {'first_name': first_name,
                                'last_name': last_name,
                                'github': github})
+    db.session.commit()
+
+def delete_student(github):
+
+    
+    QUERY = """DELETE FROM students 
+            WHERE github = :github;
+            """
+    db.session.execute(QUERY, {'github': github})
+    db.session.commit()
+
+def delete_grades(github):
+
+    
+    QUERY = """DELETE FROM grades
+            WHERE student_github = :github;
+            """
+    db.session.execute(QUERY, {'github': github})
     db.session.commit()
 
 
