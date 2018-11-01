@@ -8,7 +8,7 @@
   <p>Description: {{projects[1]}} Max Grade: {{ projects[2] }}</p>
   <ul>
   {% for grade in grades %}
-  	<li> Github:{{grade[0]}}  Grade:{{grade[1]}}</li>
+  	<li> Github:<a href="/student?github={{ grade[0] }}">{{ grade[0] }}</a>  Grade:{{grade[1]}}</li>
   {% endfor %}
   </ul>
 </body>
