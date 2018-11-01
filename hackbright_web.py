@@ -78,23 +78,30 @@ def list_students_and_projects():
 							students=students,
 							projects=projects)
 
-@app.route("/assign-grade")
-def get_grades():
-	return render_template("assign_grades.html")
+# @app.route("/assign-grade")
+# def get_grades():
+# 	return render_template("assign_grades.html")
 
-@app.route("/assign-grades", methods=['POST'])
-def assign_grade():
-	github = request.args.get("github")
-	title = request.args.get("title")
-	grade = request.args.get("grade")
-	max_grade = request.args.get("max_grade")
-	hackbright.assign_grade(github, title, grade)
-	hackbright.add_student_project(github, title, max_grade)
-	return render_template("grades.html", 
-    						github=github,
-    						title=title,
-    						grade=grade,
-							max_grade= max_grade)
+# @app.route("/assign-grades", methods=['POST'])
+# def assign_grade():
+# 	github = request.args.get("github")
+# 	title = request.args.get("title")
+# 	grade = request.args.get("grade")
+
+@app.route("/add-project")
+def add_project():
+	return render_template("add_project.html")
+
+@app.route("/project-add", methods=['POST'])
+def add_projects():
+	title = request.form.get("title")
+	description = request.form.get("description")
+	max_grade = request.form.get("max_grade")
+	hackbright.add_student_project(title, description, max_grade)
+	return render_template("projects.html",
+							title=title,
+							description=description,
+							max_grade=max_grade)
 
 if __name__ == "__main__":
 	hackbright.connect_to_db(app)

@@ -106,24 +106,23 @@ def get_grade_by_github_title(github, title):
     return row
 
 
-def assign_grade(github, title, grade):
-    """Assign a student a grade on an assignment and print a confirmation."""
+# def assign_grade(github, title, grade):
+#     """Assign a student a grade on an assignment and print a confirmation."""
 
-    QUERY = """
-        INSERT INTO grades (student_github, project_title, grade)
-          VALUES (:github, :title, :grade)
-        """
+#     QUERY = """
+#         INSERT INTO grades (student_github, project_title, grade)
+#           VALUES (:github, :title, :grade)
+#         """
 
-    db_cursor = db.session.execute(QUERY, {'github': github,
-                                           'title': title,
-                                           'grade': grade})
+#     db_cursor = db.session.execute(QUERY, {'github': github,
+#                                            'title': title,
+#                                            'grade': grade})
 
     db.session.commit()
-def add_student_project(github, title, max_grade):
+def add_student_project(title, description, max_grade):
     QUERY = """
         INSERT INTO projects (title, description, max_grade)
           VALUES (:title, :description, :max_grade)
-          AND title = :title
         """
     db.session.execute(QUERY, {'title': title,
                                 'description': description,
