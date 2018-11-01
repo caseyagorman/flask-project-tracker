@@ -1,0 +1,15 @@
+
+{% extends 'base.html' %}
+<title>Delete a Student</title>
+{% block content %}
+<br>
+<form action="/delete-student" method="POST">
+<div class="form-group mb-2">
+  <label>Enter GitHub username
+      <input type="text" name="github">
+  </label><br>
+  <button type="submit" class="btn btn-primary mb-2">Delete student</button>
+  </div>
+</form>
+
+{% endblock %}
