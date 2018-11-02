@@ -43,11 +43,9 @@ def student_add():
     last = request.form.get("last")
     github = request.form.get("github")
     hackbright.make_new_student(first, last, github)
-    return render_template("student_add.html", 
-    						first=first,
-    						last=last,
-    						github=github)
-							
+    flash(github + ' has been added')
+    return redirect("/")	
+
 @app.route("/student-delete")
 def get_student_to_delete():
 	"""display form to delete student"""
@@ -62,6 +60,7 @@ def student_delete():
 	 if student:
 	 	hackbright.delete_student_by_github(github)
 	 	hackbright.delete_grades_by_github(github)
+	 	flash(github + ' has been deleted')
 	 	return redirect("/")
 	 else: 
  	 	flash('There is no student with that name in our records')
@@ -101,8 +100,8 @@ def assign_grade():
 	student = hackbright.get_student_by_github(github)
 	if student:
 		hackbright.assign_grade(github, title, grade)
-		return render_template("grades.html", 
-								github=github)
+		flash('Grades have been added for ' + github)
+		return redirect("/")
 	else: 
 		flash('There is no student with that name in our records')
 		return redirect("/assign-grade")							
@@ -119,10 +118,8 @@ def add_projects():
 	description = request.form.get("description")
 	max_grade = request.form.get("max_grade")
 	hackbright.add_student_project(title, description, max_grade)
-	return render_template("project_add.html",
-							title=title,
-							description=description,
-							max_grade=max_grade)
+	flash(title + ' has been added')
+	return redirect("/")
 
 @app.route("/delete-project")
 def get_project_to_delete():
@@ -138,6 +135,7 @@ def project_delete():
 	 if check_title:
 	 	hackbright.delete_project_by_title(title)
 	 	hackbright.delete_grades_by_title(title)
+	 	flash(title + ' has been deleted')
 	 	return redirect("/")
 	 else: 
 	 	flash('There is no project with that name in our records')
