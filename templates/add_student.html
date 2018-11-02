@@ -1,20 +1,21 @@
-{% extends "base.html" %}
+
+{% extends 'base.html' %}
     <title>Add a Student</title>
-
-
-{% block content %}
-<h1> Hello! </h1>
+    {% block content %}
+    <div class= "jumbotron">
+    <br>
   <form action="/student-add" method="POST">
       <label>Enter GitHub username
-          <input type="text" name="github">
-      </label>
+          <input type="text" name="github" class="form-control">
+      </label><br>
       <label>Enter Student's first name
-          <input type="text" name="first">
-      </label>
-      <label>Enter Student's last name 
-          <input type="text" name="last">
-      </label>
+          <input type="text" name="first" class="form-control">
+      </label><br>
+      <label>Enter Student's last name
+          <input type="text" name="last" class="form-control">
+      </label><br>
       <button type="submit" class="btn btn-primary mb-2" value="Display Student">Display Student</button>
   </form>
+ </div>
 
 {% endblock %}

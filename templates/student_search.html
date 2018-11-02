@@ -1,9 +1,8 @@
 {% extends 'base.html' %}
+ <title>Project Tracker</title>
 {% block content %}
-    <title>Project Tracker</title>
-</head>
+ <div class="jumbotron">
 
-<body>
 
   <form action="/student">
       <label>Enter GitHub username
@@ -11,5 +10,6 @@
       </label>
       <input type="submit" value="Display Student">
   </form>
+</div>
 
 {% endblock %}

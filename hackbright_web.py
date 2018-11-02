@@ -1,10 +1,11 @@
 """A web application for tracking projects, students, and student grades."""
 
-from flask import Flask, request, render_template, redirect
+from flask import Flask, request, render_template, redirect, flash
 
 import hackbright
 
 app = Flask(__name__)
+app.secret_key = b'shhhhhhhhh'
 
 
 @app.route("/student")
@@ -30,10 +31,10 @@ def get_student_form():
 
     return render_template("student_search.html")
 
-@app.route("/new-student")
+@app.route("/add-student")
 def get_new_student():
 
-	return render_template("new_student.html")
+	return render_template("add_student.html")
 
 @app.route("/student-add", methods=['POST'])
 def student_add():
@@ -49,19 +50,27 @@ def student_add():
 							
 @app.route("/student-delete")
 def get_student_to_delete():
+	"""display form to delete student"""
 	return render_template("student_delete.html")
 
 
 @app.route("/delete-student", methods=['POST'])
 def student_delete():
-	 """Delete a student."""
+	 """Check if student in database, delete a student."""
 	 github = request.form.get("github")
-	 hackbright.delete_student_by_github(github)
-	 hackbright.delete_grades_by_github(github)
-	 return redirect("/")
+	 student = hackbright.get_student_by_github(github)
+	 if student:
+	 	hackbright.delete_student_by_github(github)
+	 	hackbright.delete_grades_by_github(github)
+	 	return redirect("/")
+	 else: 
+ 	 	flash('There is no student with that name in our records')
+ 	 	return redirect("/student-delete")							
+
 
 @app.route("/project")
 def get_project():
+	"""get projects from database"""
 	title = request.args.get("title")
 	projects = hackbright.get_project_by_title(title)
 	grades = hackbright.get_grades_by_title(title)
@@ -71,6 +80,7 @@ def get_project():
 
 @app.route("/")
 def list_students_and_projects():
+	"""get and list all students and projects from database"""
 	students = hackbright.get_all_students()
 	projects = hackbright.get_all_projects()
 	return render_template("homepage.html",
@@ -79,23 +89,32 @@ def list_students_and_projects():
 
 @app.route("/assign-grade")
 def get_grades():
+	"""get form to assign grades"""
 	return render_template("assign_grades.html")
 
 @app.route("/assign-grades", methods=['POST'])
 def assign_grade():
+	"""assign project and grade to student"""
 	github = request.form.get("github")
 	title = request.form.get("title")
 	grade = request.form.get("grade")
-	hackbright.assign_grade(github, title, grade)
-	return render_template("grades.html", 
-    						github=github)
+	student = hackbright.get_student_by_github(github)
+	if student:
+		hackbright.assign_grade(github, title, grade)
+		return render_template("grades.html", 
+								github=github)
+	else: 
+		flash('There is no student with that name in our records')
+		return redirect("/assign-grade")							
 
 @app.route("/add-project")
 def add_project():
+	"""get form to add project"""
 	return render_template("add_project.html")
 
 @app.route("/project-add", methods=['POST'])
 def add_projects():
+	"""add project to database"""
 	title = request.form.get("title")
 	description = request.form.get("description")
 	max_grade = request.form.get("max_grade")
@@ -107,16 +126,22 @@ def add_projects():
 
 @app.route("/delete-project")
 def get_project_to_delete():
+	"""get form to delete project"""
 	return render_template("project_delete.html")
 
 
 @app.route("/project-delete", methods=['POST'])
 def project_delete():
-	 """Delete a student."""
+	 """Check if project exists, delete a project."""
 	 title = request.form.get("title")
-	 hackbright.delete_project_by_title(title)
-	 hackbright.delete_grades_by_title(title)
-	 return redirect("/")
+	 check_title = hackbright.get_project_by_title(title)
+	 if check_title:
+	 	hackbright.delete_project_by_title(title)
+	 	hackbright.delete_grades_by_title(title)
+	 	return redirect("/")
+	 else: 
+	 	flash('There is no project with that name in our records')
+	 	return redirect("/delete-project")
 
 if __name__ == "__main__":
 	hackbright.connect_to_db(app)

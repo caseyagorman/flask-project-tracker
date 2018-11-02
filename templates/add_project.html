@@ -2,19 +2,24 @@
 {% extends 'base.html' %}
 <title>Add a Project</title>
 {% block content %}
+<div class= "jumbotron">
 <br>
 <form action="/project-add" method="POST">
+  <div class="form-group">
   <label>Enter title
-      <input type="text" name="title">
+      <input type="text" name="title" class="form-control">
   </label><br>
   <label>Enter description
-      <input type="text" name="description">
+      <input type="text" name="description" class="form-control">
   </label><br>
   <label>Enter max grade
-      <input type="text" name="max_grade">
+      <input type="text" name="max_grade" class="form-control">
   </label><br>
-  <button type="submit" class="btn btn-primary mb-2" value="Add project">Display Student</button>
+  <button type="submit" class="btn btn-primary mb-2" value="Add project">Add project</button>
+</div>
 </form>
+</div>
+
 
 
 {% endblock %}

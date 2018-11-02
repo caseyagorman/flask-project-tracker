@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
     <title>Project Info</title>
 {% block content %}
+<div class= "jumbotron">
  <h1>Project: {{ projects[0] }}</h1>
   <p>Description:<span> </span>{{ projects[1] }} Max Grade: {{ projects[2] }}</p>
   <ul>
@@ -11,4 +12,5 @@
   {% endfor %}
   {% endif %}
   </ul>
+</div>
 {% endblock %}
